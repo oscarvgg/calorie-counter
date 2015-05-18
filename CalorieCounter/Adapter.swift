@@ -1,0 +1,208 @@
+//
+//  ParseAdapter.swift
+//  CalorieCounter
+//
+//  Created by Oscar Vicente González Greco on 17/5/15.
+//  Copyright (c) 2015 Oscarvgg. All rights reserved.
+//
+
+import Parse
+
+class Adapter<T: Model>: NSObject {
+   
+    /**
+    Transforms a PFObject to Dictionary ob objects compatible with MIModel
+    
+    :param: raw the raw object (PFObject)
+    
+    :returns: A Dictionary type from raw object
+    */
+    static func rawToDictionary(raw: AnyObject) -> [String: AnyObject] {
+        
+        var dictionary: [String: AnyObject] = [String: AnyObject]()
+        
+        if let raw = raw as? PFObject {
+            
+            if let id = raw.objectId {
+                
+                dictionary["objectId"] = id
+            }
+            
+            for key in raw.allKeys() {
+                
+                dictionary[key as! String] = raw.objectForKey(key as! String)!
+                
+            }
+            
+            if let createdAt = raw.createdAt, updatedAt = raw.updatedAt {
+                
+                dictionary["createdAt"] = createdAt
+                dictionary["updatedAt"] = updatedAt
+            }
+        }
+        
+        return dictionary
+    }
+    
+    
+    static func save(model: Model, completion: (Bool, NSError?) -> Void) {
+        
+        var rawModel: PFObject!
+        
+        if let objectId = model.objectId {
+            
+            rawModel = PFObject(
+                withoutDataWithClassName: T.tableName(),
+                objectId: objectId)
+        }
+        else {
+            
+            rawModel = PFObject(className: T.tableName())
+        }
+        
+        // Build PFObject from model
+        for (key, value) in model.toDictionary() {
+            
+            if key != "objectId" {
+                
+                // if value is an object
+                if let idValue = value["objectId"] as? String {
+                    
+                    let association = PFObject(
+                        withoutDataWithClassName: T.tableNameForAssociation(key),
+                        objectId: idValue)
+                    
+                    rawModel.setObject(association, forKey: key)
+                }
+                else {
+                    
+                    rawModel.setObject(value, forKey: key)
+                }
+            }
+        }
+        
+        rawModel.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
+            
+            // set the id of the just inserted object to the model
+            model.objectId = rawModel.objectId
+            
+            completion(succeeded, error);
+        }
+    }
+    
+    
+    static func find(query: [String:AnyObject]?, completion: ([T], NSError?) -> Void) {
+        
+        var parseQuery = PFQuery(className: T.tableName())
+        
+        if let query = query {
+            
+            parseQuery = self.buildQuery(query, parseQuery: parseQuery)
+        }
+        
+        parseQuery.findObjectsInBackgroundWithBlock { (result: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let result = result where error == nil
+            {
+                var items:[T] = []
+                
+                for aResult in result {
+                    
+                    var item = aResult as! PFObject
+                    
+                    items.append(T.modelFromRaw(self.rawToDictionary(item)) as! T)
+                }
+                
+                completion(items, error)
+            }
+            else {
+                completion([], error)
+            }
+            
+        }
+    }
+    
+    
+    static func delete(model: Model, completion: (Bool, NSError?) -> Void) {
+        
+        let rawModel: PFObject = PFObject(
+            withoutDataWithClassName: T.tableName(),
+            objectId: model.objectId)
+        
+        rawModel.deleteInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
+            
+            completion(succeeded, error);
+        }
+    }
+    
+    
+    
+    // MARK: - Query
+    
+    /**
+    Transforms a query into a Parse query
+    
+    :param: query      the query
+    :param: parseQuery the parse query
+    
+    :returns: a Parse query
+    */
+    static func buildQuery(query: [String:AnyObject], parseQuery: PFQuery) -> PFQuery {
+        
+        self.parseWhere(query["where"] as? [String:[String:AnyObject]], parseQuery: parseQuery)
+        
+        return parseQuery
+    }
+    
+    
+    /**
+    Adds the conditions from the where part of a query to a Parse query
+    
+    :param: whereClause a dictionary with the values in a where clause
+    :param: parseQuery  the parse query to add the converted conditions
+    
+    :returns: a Parse query
+    */
+    static func parseWhere(whereClause: [String:[String:AnyObject]]?, parseQuery: PFQuery) -> PFQuery {
+        
+        if let whereClause = whereClause {
+            
+            for (property, condition) in whereClause {
+                
+                for (theOperator, value) in condition {
+                    
+                    switch theOperator {
+                        
+                    case "=":
+                        parseQuery.whereKey(property, equalTo: value)
+                        
+                    case ">":
+                        parseQuery.whereKey(property, greaterThan: value)
+                        
+                    case ">=":
+                        parseQuery.whereKey(property, greaterThanOrEqualTo: value)
+                        
+                    case "<":
+                        parseQuery.whereKey(property, lessThan: value)
+                        
+                    case "<=":
+                        parseQuery.whereKey(property, lessThanOrEqualTo: value)
+                        
+                    case "!=":
+                        parseQuery.whereKey(property, notEqualTo: value)
+                        
+                    case "in":
+                        parseQuery.whereKey(property, containedIn: value as! [AnyObject])
+                        
+                    default:
+                        break
+                        
+                    }
+                }
+            }
+        }
+        
+        return parseQuery
+    }
+    
+}

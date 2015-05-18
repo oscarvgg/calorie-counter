@@ -8,6 +8,7 @@ import UIKit
 
 import Bolts
 import Parse
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
+        
+        // Realm Path
+        println("Realm Path: \(Realm.defaultPath)")
+        
         // Parse configuration
         Parse.setApplicationId("KZGf53jXvy5VWbqrOsOQSca41W3830eGwib0gYeV", clientKey: "jJdVpFmkqAu7ufMYbTTURU8r8t2mhPiTi6vG4JNl")
         

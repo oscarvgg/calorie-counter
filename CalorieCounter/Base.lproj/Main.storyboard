@@ -47,7 +47,19 @@
                                     <constraint firstAttribute="height" constant="44" id="0Pw-tI-WdC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Log In">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqY-Qf-haZ">
+                                <rect key="frame" x="20" y="275" width="560" height="44"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.25882352939999997" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="yhJ-hJ-6eL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Register">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -57,15 +69,18 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Zsf-uo-ytw" secondAttribute="trailing" constant="20" id="06D-t3-WoZ"/>
                             <constraint firstItem="0H5-lL-LUD" firstAttribute="top" secondItem="7Yj-d9-tAx" secondAttribute="bottom" constant="45" id="9Ca-eP-lgC"/>
+                            <constraint firstItem="kqY-Qf-haZ" firstAttribute="top" secondItem="Zsf-uo-ytw" secondAttribute="bottom" constant="15" id="Bqf-7L-Ac7"/>
                             <constraint firstAttribute="centerX" secondItem="Zsf-uo-ytw" secondAttribute="centerX" id="DCr-Zn-yV1"/>
                             <constraint firstItem="wPC-hv-NbE" firstAttribute="top" secondItem="0H5-lL-LUD" secondAttribute="bottom" constant="30" id="DFq-0i-B4O"/>
                             <constraint firstAttribute="trailing" secondItem="ohr-kz-Ei9" secondAttribute="trailing" constant="20" id="Hey-uU-QB7"/>
                             <constraint firstItem="Zsf-uo-ytw" firstAttribute="top" secondItem="PE8-56-gPr" secondAttribute="bottom" constant="30" id="OEH-gF-CLJ"/>
+                            <constraint firstItem="kqY-Qf-haZ" firstAttribute="leading" secondItem="3Rq-7I-0UO" secondAttribute="leading" constant="20" id="QAx-kn-GAG"/>
                             <constraint firstItem="Zsf-uo-ytw" firstAttribute="leading" secondItem="3Rq-7I-0UO" secondAttribute="leading" constant="20" id="X7G-pn-yDu"/>
                             <constraint firstAttribute="trailing" secondItem="PE8-56-gPr" secondAttribute="trailing" constant="20" id="c3m-Pp-G1r"/>
                             <constraint firstItem="PE8-56-gPr" firstAttribute="centerY" secondItem="wPC-hv-NbE" secondAttribute="centerY" id="hAN-Pq-Xaf"/>
                             <constraint firstItem="PE8-56-gPr" firstAttribute="leading" secondItem="wPC-hv-NbE" secondAttribute="trailing" constant="5" id="kmr-yH-Qi5"/>
                             <constraint firstItem="0H5-lL-LUD" firstAttribute="width" secondItem="wPC-hv-NbE" secondAttribute="width" id="mzK-xm-Rk9"/>
+                            <constraint firstAttribute="trailing" secondItem="kqY-Qf-haZ" secondAttribute="trailing" constant="20" id="q0z-mO-pHM"/>
                             <constraint firstItem="ohr-kz-Ei9" firstAttribute="centerY" secondItem="0H5-lL-LUD" secondAttribute="centerY" id="qE7-ac-RFy"/>
                             <constraint firstItem="wPC-hv-NbE" firstAttribute="leading" secondItem="3Rq-7I-0UO" secondAttribute="leading" constant="20" id="sQw-Tt-hdc"/>
                             <constraint firstItem="ohr-kz-Ei9" firstAttribute="leading" secondItem="0H5-lL-LUD" secondAttribute="trailing" constant="5" id="uDx-7w-bhN"/>

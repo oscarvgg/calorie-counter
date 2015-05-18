@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		55F7DF5B1B08FFE5003CE14E /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF5A1B08FFE5003CE14E /* MainTableViewController.swift */; };
 		55F7DF5D1B0904B1003CE14E /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF5C1B0904B1003CE14E /* Styler.swift */; };
+		55F7DF601B0909D7003CE14E /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7DF5F1B0909D7003CE14E /* RealmSwift.framework */; };
+		55F7DF611B0909D7003CE14E /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7DF5F1B0909D7003CE14E /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55F7DF6C1B090A59003CE14E /* Calorie_Counter_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF6B1B090A59003CE14E /* Calorie_Counter_Tests.swift */; };
+		55F7DF751B090B7B003CE14E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF741B090B7B003CE14E /* Model.swift */; };
+		55F7DF771B09113B003CE14E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF761B09113B003CE14E /* User.swift */; };
+		55F7DF791B0985CC003CE14E /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF781B0985CC003CE14E /* Adapter.swift */; };
+		55F7DF7B1B098922003CE14E /* Calorie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF7A1B098922003CE14E /* Calorie.swift */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA81501A49DA1800E65899 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81BA814E1A49DA1800E65899 /* Main.storyboard */; };
 		81BA81521A49DA1800E65899 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
@@ -24,9 +31,41 @@
 		81BA81811A49E10C00E65899 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81801A49E10C00E65899 /* ParseUI.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		55F7DF6D1B090A59003CE14E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 81BA813D1A49DA1800E65899 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81BA81441A49DA1800E65899;
+			remoteInfo = "Calorie Counter";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		55F7DF621B0909D7003CE14E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				55F7DF611B0909D7003CE14E /* RealmSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		55F7DF5A1B08FFE5003CE14E /* MainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		55F7DF5C1B0904B1003CE14E /* Styler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styler.swift; sourceTree = "<group>"; };
+		55F7DF5F1B0909D7003CE14E /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		55F7DF671B090A59003CE14E /* Calorie Counter Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calorie Counter Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55F7DF6A1B090A59003CE14E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55F7DF6B1B090A59003CE14E /* Calorie_Counter_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calorie_Counter_Tests.swift; sourceTree = "<group>"; };
+		55F7DF741B090B7B003CE14E /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		55F7DF761B09113B003CE14E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		55F7DF781B0985CC003CE14E /* Adapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
+		55F7DF7A1B098922003CE14E /* Calorie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calorie.swift; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Calorie Counter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calorie Counter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../CalorieCounter/Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../CalorieCounter/AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +85,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		55F7DF641B090A59003CE14E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81BA81421A49DA1800E65899 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -56,6 +102,7 @@
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */,
 				81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */,
+				55F7DF601B0909D7003CE14E /* RealmSwift.framework in Frameworks */,
 				81BA81721A49DB6800E65899 /* ParseCrashReporting.framework in Frameworks */,
 				81BA81731A49DB6800E65899 /* ParseFacebookUtils.framework in Frameworks */,
 				81BA81811A49E10C00E65899 /* ParseUI.framework in Frameworks */,
@@ -66,10 +113,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55F7DF5E1B090985003CE14E /* Data Access */ = {
+			isa = PBXGroup;
+			children = (
+				55F7DF741B090B7B003CE14E /* Model.swift */,
+				55F7DF761B09113B003CE14E /* User.swift */,
+				55F7DF7A1B098922003CE14E /* Calorie.swift */,
+				55F7DF781B0985CC003CE14E /* Adapter.swift */,
+			);
+			name = "Data Access";
+			sourceTree = "<group>";
+		};
+		55F7DF681B090A59003CE14E /* Calorie Counter Tests */ = {
+			isa = PBXGroup;
+			children = (
+				55F7DF6B1B090A59003CE14E /* Calorie_Counter_Tests.swift */,
+				55F7DF691B090A59003CE14E /* Supporting Files */,
+			);
+			path = "Calorie Counter Tests";
+			sourceTree = "<group>";
+		};
+		55F7DF691B090A59003CE14E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55F7DF6A1B090A59003CE14E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
 				81BA81471A49DA1800E65899 /* CalorieCounter */,
+				55F7DF681B090A59003CE14E /* Calorie Counter Tests */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
 			);
@@ -79,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				81BA81451A49DA1800E65899 /* Calorie Counter.app */,
+				55F7DF671B090A59003CE14E /* Calorie Counter Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,6 +167,7 @@
 				55F7DF5A1B08FFE5003CE14E /* MainTableViewController.swift */,
 				81BA814E1A49DA1800E65899 /* Main.storyboard */,
 				55F7DF5C1B0904B1003CE14E /* Styler.swift */,
+				55F7DF5E1B090985003CE14E /* Data Access */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81481A49DA1800E65899 /* Supporting Files */,
 			);
@@ -108,6 +186,7 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55F7DF5F1B0909D7003CE14E /* RealmSwift.framework */,
 				81BA816B1A49DB6800E65899 /* Bolts.framework */,
 				81BA816C1A49DB6800E65899 /* Parse.framework */,
 				81BA816D1A49DB6800E65899 /* ParseCrashReporting.framework */,
@@ -133,6 +212,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		55F7DF661B090A59003CE14E /* Calorie Counter Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55F7DF6F1B090A59003CE14E /* Build configuration list for PBXNativeTarget "Calorie Counter Tests" */;
+			buildPhases = (
+				55F7DF631B090A59003CE14E /* Sources */,
+				55F7DF641B090A59003CE14E /* Frameworks */,
+				55F7DF651B090A59003CE14E /* Resources */,
+				55F7DF721B090A98003CE14E /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55F7DF6E1B090A59003CE14E /* PBXTargetDependency */,
+			);
+			name = "Calorie Counter Tests";
+			productName = "Calorie Counter Tests";
+			productReference = 55F7DF671B090A59003CE14E /* Calorie Counter Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		81BA81441A49DA1800E65899 /* Calorie Counter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Calorie Counter" */;
@@ -141,6 +239,7 @@
 				81BA81421A49DA1800E65899 /* Frameworks */,
 				81BA81431A49DA1800E65899 /* Resources */,
 				81CC85E11A49F6D40076DE19 /* Upload Symbol Files */,
+				55F7DF621B0909D7003CE14E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,6 +259,10 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Oscarvgg;
 				TargetAttributes = {
+					55F7DF661B090A59003CE14E = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = 81BA81441A49DA1800E65899;
+					};
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 8LH4JK6B3B;
@@ -180,11 +283,19 @@
 			projectRoot = "";
 			targets = (
 				81BA81441A49DA1800E65899 /* Calorie Counter */,
+				55F7DF661B090A59003CE14E /* Calorie Counter Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		55F7DF651B090A59003CE14E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81BA81431A49DA1800E65899 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +308,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		55F7DF721B090A98003CE14E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework/strip-frameworks.sh\"";
+		};
 		81CC85E11A49F6D40076DE19 /* Upload Symbol Files */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -214,17 +338,37 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		55F7DF631B090A59003CE14E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55F7DF6C1B090A59003CE14E /* Calorie_Counter_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81BA81411A49DA1800E65899 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				55F7DF5D1B0904B1003CE14E /* Styler.swift in Sources */,
+				55F7DF791B0985CC003CE14E /* Adapter.swift in Sources */,
 				55F7DF5B1B08FFE5003CE14E /* MainTableViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				55F7DF771B09113B003CE14E /* User.swift in Sources */,
+				55F7DF751B090B7B003CE14E /* Model.swift in Sources */,
+				55F7DF7B1B098922003CE14E /* Calorie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		55F7DF6E1B090A59003CE14E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81BA81441A49DA1800E65899 /* Calorie Counter */;
+			targetProxy = 55F7DF6D1B090A59003CE14E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		81BA814E1A49DA1800E65899 /* Main.storyboard */ = {
@@ -239,6 +383,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		55F7DF701B090A59003CE14E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Calorie Counter Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calorie Counter.app/Calorie Counter";
+			};
+			name = Debug;
+		};
+		55F7DF711B090A59003CE14E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Calorie Counter Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calorie Counter.app/Calorie Counter";
+			};
+			name = Release;
+		};
 		81BA81621A49DA1800E65899 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -327,6 +514,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RealmSwift.framework/frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/CalorieCounter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -346,6 +534,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RealmSwift.framework/frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/CalorieCounter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -359,6 +548,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		55F7DF6F1B090A59003CE14E /* Build configuration list for PBXNativeTarget "Calorie Counter Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55F7DF701B090A59003CE14E /* Debug */,
+				55F7DF711B090A59003CE14E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "CalorieCounter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
