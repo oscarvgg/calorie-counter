@@ -91,6 +91,27 @@ class Adapter<T: Model>: NSObject {
     }
     
     
+    static func findWithId(id: String, completion: (T?, NSError?) -> Void) {
+        
+        var query = PFQuery(className: T.tableName())
+        query.whereKey("objectId", equalTo: id)
+        
+        query.findObjectsInBackgroundWithBlock { (result: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let result = result where error == nil
+            {
+                var firstResult = result.first as! PFObject
+                
+                completion(T.modelFromRaw(self.rawToDictionary(firstResult)) as? T, error)
+            }
+            else {
+                completion(nil, error)
+            }
+            
+        }
+    }
+    
+    
     static func find(query: [String:AnyObject]?, completion: ([T], NSError?) -> Void) {
         
         var parseQuery = PFQuery(className: T.tableName())
@@ -133,6 +154,12 @@ class Adapter<T: Model>: NSObject {
             
             completion(succeeded, error);
         }
+    }
+    
+    
+    static func buildRaw(values: [String:AnyObject]) -> AnyObject {
+        
+        return PFObject(className: T.tableName(), dictionary: values) as AnyObject
     }
     
     

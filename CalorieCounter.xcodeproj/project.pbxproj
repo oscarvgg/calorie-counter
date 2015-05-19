@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55BFEF051B0AE62100EA6A0F /* LogInTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BFEF041B0AE62100EA6A0F /* LogInTableViewController.swift */; };
+		55BFEF071B0AEA7100EA6A0F /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BFEF061B0AEA7100EA6A0F /* SignUpTableViewController.swift */; };
 		55F7DF5B1B08FFE5003CE14E /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF5A1B08FFE5003CE14E /* MainTableViewController.swift */; };
 		55F7DF5D1B0904B1003CE14E /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F7DF5C1B0904B1003CE14E /* Styler.swift */; };
 		55F7DF601B0909D7003CE14E /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7DF5F1B0909D7003CE14E /* RealmSwift.framework */; };
@@ -56,6 +58,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		55BFEF041B0AE62100EA6A0F /* LogInTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInTableViewController.swift; sourceTree = "<group>"; };
+		55BFEF061B0AEA7100EA6A0F /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		55F7DF5A1B08FFE5003CE14E /* MainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		55F7DF5C1B0904B1003CE14E /* Styler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styler.swift; sourceTree = "<group>"; };
 		55F7DF5F1B0909D7003CE14E /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 			children = (
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				55F7DF5A1B08FFE5003CE14E /* MainTableViewController.swift */,
+				55BFEF041B0AE62100EA6A0F /* LogInTableViewController.swift */,
+				55BFEF061B0AEA7100EA6A0F /* SignUpTableViewController.swift */,
 				81BA814E1A49DA1800E65899 /* Main.storyboard */,
 				55F7DF5C1B0904B1003CE14E /* Styler.swift */,
 				55F7DF5E1B090985003CE14E /* Data Access */,
@@ -351,11 +357,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				55F7DF5D1B0904B1003CE14E /* Styler.swift in Sources */,
+				55BFEF051B0AE62100EA6A0F /* LogInTableViewController.swift in Sources */,
 				55F7DF791B0985CC003CE14E /* Adapter.swift in Sources */,
 				55F7DF5B1B08FFE5003CE14E /* MainTableViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				55F7DF771B09113B003CE14E /* User.swift in Sources */,
 				55F7DF751B090B7B003CE14E /* Model.swift in Sources */,
+				55BFEF071B0AEA7100EA6A0F /* SignUpTableViewController.swift in Sources */,
 				55F7DF7B1B098922003CE14E /* Calorie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,6 +563,7 @@
 				55F7DF711B090A59003CE14E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "CalorieCounter" */ = {
 			isa = XCConfigurationList;

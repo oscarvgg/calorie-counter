@@ -9,6 +9,9 @@
 import UIKit
 
 class MainTableViewController: UITableViewController {
+    
+    
+    var localUser: User?
 
     override func viewDidLoad() {
         super.viewDidLoad()

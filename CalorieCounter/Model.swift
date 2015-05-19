@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Oscarvgg. All rights reserved.
 //
 
+import Foundation
+
 import RealmSwift
 
 class Model: Object {
@@ -49,5 +51,39 @@ class Model: Object {
     
     class func tableNameForAssociation(association: String) -> String {
         return ""
+    }
+    
+    
+    func save<T:Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
+        
+        Adapter<T>.save(self, completion: { (succeeded: Bool, error: NSError?) -> Void in
+            
+            if succeeded {
+                
+                Realm().write({ () -> Void in
+                    
+                    Realm().add(self, update: true)
+                })
+            }
+            
+            completion(succeeded, error)
+        })
+    }
+    
+    
+    func delete<T:Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
+        
+        Adapter<T>.delete(self, completion: { (succeeded: Bool, error: NSError?) -> Void in
+            
+            if succeeded {
+                
+                Realm().write({ () -> Void in
+                    
+                    Realm().delete(self)
+                })
+            }
+            
+            completion(succeeded, error)
+        })
     }
 }

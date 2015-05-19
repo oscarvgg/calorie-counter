@@ -19,7 +19,7 @@ class User: Model {
     
     dynamic var email: String? = ""
     
-    dynamic var maxDailyCalorieCount: UInt = 0
+    dynamic var maxDailyCalorieCount: Int = 2000
     
     dynamic var calories = List<Calorie>()
     
@@ -34,14 +34,23 @@ class User: Model {
         
         let model = User()
         
-        model.objectId = raw["objectId"] as? String
+        model.objectId = raw["objectId"] as? String ?? ""
         
-        model.username = raw["username"] as? String
+        model.username = raw["username"] as? String ?? ""
         
-        model.maxDailyCalorieCount = UInt((raw["maxDailyCalorieCount"] as! NSString).integerValue)
+        model.maxDailyCalorieCount = raw["maxDailyCalorieCount"] as? Int ?? 2000
         
-        model.createdAt = raw["createdAt"] as! NSDate
-        model.updatedAt = raw["updatedAt"] as! NSDate
+        if let calories = raw["calories"] as? [[String:AnyObject]] {
+            
+            for calorie in calories {
+                
+                model.calories.append(Calorie.modelFromRaw(calorie) as! Calorie)
+            }
+        }
+        
+        
+        model.createdAt = raw["createdAt"] as? NSDate ?? NSDate()
+        model.updatedAt = raw["updatedAt"] as? NSDate ?? NSDate()
         
         return model
     }
@@ -51,13 +60,15 @@ class User: Model {
         
         var raw: [String: AnyObject] = [:]
         
-        raw["objectId"] = self.objectId
+        if self.objectId != nil && self.objectId != "" {
+            
+            raw["objectId"] = self.objectId
+        }
+
         raw["username"] = self.username
         raw["password"] = self.password
         raw["email"] = self.email
-        raw["maxDailyCalorieCount"] = String(self.maxDailyCalorieCount)
-        raw["createdAt"] = self.createdAt
-        raw["updatedAt"] = self.updatedAt
+        raw["maxDailyCalorieCount"] = self.maxDailyCalorieCount
         
         return raw
     }
@@ -110,24 +121,72 @@ class User: Model {
                 
                 if let user = user where error == nil {
                     
-                    let modelUser = self.modelFromRaw(Adapter.rawToDictionary(user)) as! User
+                    Adapter<User>.findWithId(user.objectId!, completion: { (user: User?, error: NSError?) -> Void in
                     
-                    NSUserDefaults.standardUserDefaults().setObject(modelUser.objectId, forKey: "currentUserId")
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    
-                    let realm = Realm()
-                    realm.write({ () -> Void in
-                        
-                        realm.add(modelUser, update: true)
+                        if let user = user where error == nil {
+                            
+                            let modelUser = self.modelFromRaw(Adapter.rawToDictionary(user)) as! User
+                            
+                            NSUserDefaults.standardUserDefaults().setObject(modelUser.objectId, forKey: "currentUserId")
+                            NSUserDefaults.standardUserDefaults().synchronize()
+                            
+                            let realm = Realm()
+                            realm.write({ () -> Void in
+                                
+                                realm.add(modelUser, update: true)
+                            })
+                            
+                            completion(user: modelUser, error: nil)
+                        }
                     })
-                    
-                    completion(user: modelUser, error: nil)
                 }
                 else {
                     
                     completion(user: nil, error: error)
                 }
         })
+    }
+    
+    
+    /**
+    Registers a user to the server and saves it's data to the local cache
+    
+    :param: user       the user model to register
+    :param: completion a completion handler with the registered user or error
+    */
+    class func signUp(user: User, completion: (User?, NSError?) -> Void) {
+        
+        let rawUser = Adapter<User>.buildRaw(user.toDictionary()) as! PFUser
+        rawUser.password = user.password
+        rawUser.username = user.username
+        rawUser.email = user.email
+        
+        rawUser.signUpInBackgroundWithBlock({ (succeded: Bool, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                user.objectId = rawUser.objectId
+                
+                NSUserDefaults.standardUserDefaults().setObject(user.objectId, forKey: "currentUserId")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                
+                let realm = Realm()
+                
+                realm.write({ () -> Void in
+                    
+                    realm.add(user, update: true)
+                })
+                
+                completion(user, nil)
+            }
+            else {
+                
+                completion(nil, error)
+            }
+            
+        })
+        
+        
     }
     
     

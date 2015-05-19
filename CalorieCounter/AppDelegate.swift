@@ -29,9 +29,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaultACL.setPublicReadAccess(true)
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
         
-        
         // apply styles
         Styler.applyStyle()
+        
+        // set initial view controller
+        let profileStoryboard = UIStoryboard(
+            name: "Main",
+            bundle: NSBundle.mainBundle())
+        
+        
+        let currentUser = User.currentUser()
+        var navigation: UINavigationController? = nil
+        
+        if let currentUser = currentUser {
+            
+            navigation = profileStoryboard
+                .instantiateInitialViewController() as? UINavigationController
+            
+            let mainViewController =
+            navigation?.viewControllers[0] as? MainTableViewController
+            
+            mainViewController?.localUser = currentUser
+            
+        }
+        else {
+            
+            navigation = profileStoryboard
+                .instantiateViewControllerWithIdentifier("logInNavigation") as? UINavigationController
+        }
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window!.rootViewController = navigation
+        self.window!.makeKeyAndVisible()
 
         return true
     }
