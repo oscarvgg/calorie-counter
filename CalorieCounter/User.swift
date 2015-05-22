@@ -40,14 +40,13 @@ class User: Model {
         
         model.maxDailyCalorieCount = raw["maxDailyCalorieCount"] as? Int ?? 2000
         
-        if let calories = raw["calories"] as? [[String:AnyObject]] {
-            
-            for calorie in calories {
-                
-                model.calories.append(Calorie.modelFromRaw(calorie) as! Calorie)
-            }
-        }
-        
+//        let calories = Realm().objects(Calorie.self)
+//        let userCalories = calories.filter("owner = %@", model)
+//        
+//        if userCalories.count > 0 {
+//            
+//            model.calories.extend(userCalories)
+//        }
         
         model.createdAt = raw["createdAt"] as? NSDate ?? NSDate()
         model.updatedAt = raw["updatedAt"] as? NSDate ?? NSDate()
@@ -60,13 +59,13 @@ class User: Model {
         
         var raw: [String: AnyObject] = [:]
         
-        if self.objectId != nil && self.objectId != "" {
+        if self.objectId != "" {
             
             raw["objectId"] = self.objectId
         }
 
         raw["username"] = self.username
-        raw["password"] = self.password
+//        raw["password"] = self.password
         raw["email"] = self.email
         raw["maxDailyCalorieCount"] = self.maxDailyCalorieCount
         
@@ -125,18 +124,16 @@ class User: Model {
                     
                         if let user = user where error == nil {
                             
-                            let modelUser = self.modelFromRaw(Adapter.rawToDictionary(user)) as! User
-                            
-                            NSUserDefaults.standardUserDefaults().setObject(modelUser.objectId, forKey: "currentUserId")
+                            NSUserDefaults.standardUserDefaults().setObject(user.objectId, forKey: "currentUserId")
                             NSUserDefaults.standardUserDefaults().synchronize()
                             
                             let realm = Realm()
                             realm.write({ () -> Void in
                                 
-                                realm.add(modelUser, update: true)
+                                realm.add(user, update: true)
                             })
                             
-                            completion(user: modelUser, error: nil)
+                            completion(user: user, error: nil)
                         }
                     })
                 }
@@ -165,7 +162,7 @@ class User: Model {
             
             if error == nil {
                 
-                user.objectId = rawUser.objectId
+                user.objectId = rawUser.objectId!
                 
                 NSUserDefaults.standardUserDefaults().setObject(user.objectId, forKey: "currentUserId")
                 NSUserDefaults.standardUserDefaults().synchronize()

@@ -12,7 +12,7 @@ import RealmSwift
 
 class Model: Object {
    
-    dynamic var objectId: String? = ""
+    dynamic var objectId: String = ""
     
     
     // MARK: - Realm
@@ -28,7 +28,7 @@ class Model: Object {
         
         let model = Model()
         
-        model.objectId = raw["objectId"] as? String
+        model.objectId = raw["objectId"] as! String
         
         return model
     }
@@ -54,11 +54,11 @@ class Model: Object {
     }
     
     
-    func save<T:Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
+    func save<T:Model>(type: T.Type, completion: (T?, NSError?) -> Void) {
         
-        Adapter<T>.save(self, completion: { (succeeded: Bool, error: NSError?) -> Void in
+        Adapter<T>.save(self, completion: { (savedModel: T?, error: NSError?) -> Void in
             
-            if succeeded {
+            if let savedModel  = savedModel {
                 
                 Realm().write({ () -> Void in
                     
@@ -66,7 +66,7 @@ class Model: Object {
                 })
             }
             
-            completion(succeeded, error)
+            completion(savedModel, error)
         })
     }
     

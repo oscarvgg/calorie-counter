@@ -36,6 +36,9 @@ class Styler: NSObject {
         // Style background colour
         UINavigationBar.appearance().barTintColor = self.appGenericColor()
         UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().titleTextAttributes =
+            [NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSBackgroundColorAttributeName: UIColor.whiteColor()]
         
         
         // Style bar items colour

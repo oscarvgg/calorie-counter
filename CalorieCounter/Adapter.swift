@@ -45,20 +45,11 @@ class Adapter<T: Model>: NSObject {
     }
     
     
-    static func save(model: Model, completion: (Bool, NSError?) -> Void) {
+    static func save(model: Model, completion: (T?, NSError?) -> Void) {
         
-        var rawModel: PFObject!
-        
-        if let objectId = model.objectId {
-            
-            rawModel = PFObject(
-                withoutDataWithClassName: T.tableName(),
-                objectId: objectId)
-        }
-        else {
-            
-            rawModel = PFObject(className: T.tableName())
-        }
+        var rawModel = PFObject(
+            withoutDataWithClassName: T.tableName(),
+            objectId: model.objectId != "" ? model.objectId : nil)
         
         // Build PFObject from model
         for (key, value) in model.toDictionary() {
@@ -84,9 +75,11 @@ class Adapter<T: Model>: NSObject {
         rawModel.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
             
             // set the id of the just inserted object to the model
-            model.objectId = rawModel.objectId
+            if model.objectId ==  "" && error == nil {
+                model.objectId = rawModel.objectId!
+            }
             
-            completion(succeeded, error);
+            completion(T.modelFromRaw(self.rawToDictionary(rawModel)) as? T, error);
         }
     }
     
@@ -157,6 +150,12 @@ class Adapter<T: Model>: NSObject {
     }
     
     
+    static func buildRaw(id: String) -> AnyObject {
+        
+        return PFObject(withoutDataWithClassName: T.tableName(), objectId: id) as AnyObject
+    }
+    
+    
     static func buildRaw(values: [String:AnyObject]) -> AnyObject {
         
         return PFObject(className: T.tableName(), dictionary: values) as AnyObject
@@ -177,6 +176,7 @@ class Adapter<T: Model>: NSObject {
     static func buildQuery(query: [String:AnyObject], parseQuery: PFQuery) -> PFQuery {
         
         self.parseWhere(query["where"] as? [String:[String:AnyObject]], parseQuery: parseQuery)
+        self.parsePopulate(query["populate"] as? [String], parseQuery: parseQuery)
         
         return parseQuery
     }
@@ -226,6 +226,28 @@ class Adapter<T: Model>: NSObject {
                         
                     }
                 }
+            }
+        }
+        
+        return parseQuery
+    }
+    
+    
+    /**
+    Adds the `include` clause to a parse query
+    
+    :param: populateClause Array of property names to be populated
+    :param: parseQuery     The parse query to add the conditions
+    
+    :returns: The resulting parse query
+    */
+    static func parsePopulate(populateClause: [String]?, parseQuery: PFQuery) -> PFQuery {
+        
+        if let populateClause = populateClause {
+            
+            for property in populateClause {
+                
+                parseQuery.includeKey(property)
             }
         }
         
