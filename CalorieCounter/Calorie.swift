@@ -49,7 +49,7 @@ public class Calorie: Model {
         
         model.value = raw["value"] as? Int ?? 0
         
-
+        model.eatenOn = raw["eatenOn"] as? NSDate ?? NSDate()
         
         model.createdAt = raw["createdAt"] as? NSDate ?? NSDate()
         model.updatedAt = raw["updatedAt"] as? NSDate ?? NSDate()
