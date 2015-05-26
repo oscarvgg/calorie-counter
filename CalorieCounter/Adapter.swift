@@ -8,7 +8,7 @@
 
 import Parse
 
-class Adapter<T: Model>: NSObject {
+public class Adapter<T: Model>: NSObject {
    
     /**
     Transforms a PFObject to Dictionary ob objects compatible with MIModel
@@ -17,7 +17,7 @@ class Adapter<T: Model>: NSObject {
     
     :returns: A Dictionary type from raw object
     */
-    static func rawToDictionary(raw: AnyObject) -> [String: AnyObject] {
+    public static func rawToDictionary(raw: AnyObject) -> [String: AnyObject] {
         
         var dictionary: [String: AnyObject] = [String: AnyObject]()
         
@@ -45,7 +45,7 @@ class Adapter<T: Model>: NSObject {
     }
     
     
-    static func save(model: Model, completion: (T?, NSError?) -> Void) {
+    public static func save(model: Model, completion: (T?, NSError?) -> Void) {
         
         var rawModel = PFObject(
             withoutDataWithClassName: T.tableName(),
@@ -84,7 +84,7 @@ class Adapter<T: Model>: NSObject {
     }
     
     
-    static func findWithId(id: String, completion: (T?, NSError?) -> Void) {
+    public static func findWithId(id: String, completion: (T?, NSError?) -> Void) {
         
         var query = PFQuery(className: T.tableName())
         query.whereKey("objectId", equalTo: id)
@@ -105,7 +105,7 @@ class Adapter<T: Model>: NSObject {
     }
     
     
-    static func find(query: [String:AnyObject]?, completion: ([T], NSError?) -> Void) {
+    public static func find(query: [String:AnyObject]?, completion: ([T], NSError?) -> Void) {
         
         var parseQuery = PFQuery(className: T.tableName())
         
@@ -137,7 +137,7 @@ class Adapter<T: Model>: NSObject {
     }
     
     
-    static func delete(model: Model, completion: (Bool, NSError?) -> Void) {
+    public static func delete(model: Model, completion: (Bool, NSError?) -> Void) {
         
         let rawModel: PFObject = PFObject(
             withoutDataWithClassName: T.tableName(),
@@ -150,13 +150,13 @@ class Adapter<T: Model>: NSObject {
     }
     
     
-    static func buildRaw(id: String) -> AnyObject {
+    public static func buildRaw(id: String) -> AnyObject {
         
         return PFObject(withoutDataWithClassName: T.tableName(), objectId: id) as AnyObject
     }
     
     
-    static func buildRaw(values: [String:AnyObject]) -> AnyObject {
+    public static func buildRaw(values: [String:AnyObject]) -> AnyObject {
         
         return PFObject(className: T.tableName(), dictionary: values) as AnyObject
     }
@@ -173,7 +173,7 @@ class Adapter<T: Model>: NSObject {
     
     :returns: a Parse query
     */
-    static func buildQuery(query: [String:AnyObject], parseQuery: PFQuery) -> PFQuery {
+    public static func buildQuery(query: [String:AnyObject], parseQuery: PFQuery) -> PFQuery {
         
         self.parseWhere(query["where"] as? [String:[String:AnyObject]], parseQuery: parseQuery)
         self.parsePopulate(query["populate"] as? [String], parseQuery: parseQuery)
@@ -190,7 +190,7 @@ class Adapter<T: Model>: NSObject {
     
     :returns: a Parse query
     */
-    static func parseWhere(whereClause: [String:[String:AnyObject]]?, parseQuery: PFQuery) -> PFQuery {
+    public static func parseWhere(whereClause: [String:[String:AnyObject]]?, parseQuery: PFQuery) -> PFQuery {
         
         if let whereClause = whereClause {
             
@@ -241,7 +241,7 @@ class Adapter<T: Model>: NSObject {
     
     :returns: The resulting parse query
     */
-    static func parsePopulate(populateClause: [String]?, parseQuery: PFQuery) -> PFQuery {
+    public static func parsePopulate(populateClause: [String]?, parseQuery: PFQuery) -> PFQuery {
         
         if let populateClause = populateClause {
             

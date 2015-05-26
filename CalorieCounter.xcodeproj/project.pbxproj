@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		553C34681B14205100420DF7 /* UserModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553C34671B14205100420DF7 /* UserModelTests.swift */; };
 		55A3B2EA1B0F8CB000B79671 /* NewEntryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A3B2E91B0F8CB000B79671 /* NewEntryTableViewController.swift */; };
 		55BFEF051B0AE62100EA6A0F /* LogInTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BFEF041B0AE62100EA6A0F /* LogInTableViewController.swift */; };
 		55BFEF071B0AEA7100EA6A0F /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BFEF061B0AEA7100EA6A0F /* SignUpTableViewController.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		553C34671B14205100420DF7 /* UserModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModelTests.swift; sourceTree = "<group>"; };
 		55A3B2E91B0F8CB000B79671 /* NewEntryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEntryTableViewController.swift; sourceTree = "<group>"; };
 		55BFEF041B0AE62100EA6A0F /* LogInTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInTableViewController.swift; sourceTree = "<group>"; };
 		55BFEF061B0AEA7100EA6A0F /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7DF6B1B090A59003CE14E /* Calorie_Counter_Tests.swift */,
+				553C34671B14205100420DF7 /* UserModelTests.swift */,
 				55F7DF691B090A59003CE14E /* Supporting Files */,
 			);
 			path = "Calorie Counter Tests";
@@ -351,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553C34681B14205100420DF7 /* UserModelTests.swift in Sources */,
 				55F7DF6C1B090A59003CE14E /* Calorie_Counter_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +408,8 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RealmSwift.framework/Frameworks",
+					"$(PROJECT_DIR)/",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -428,6 +434,8 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RealmSwift.framework/Frameworks",
+					"$(PROJECT_DIR)/",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Calorie Counter Tests/Info.plist";

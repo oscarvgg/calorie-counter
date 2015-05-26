@@ -11,26 +11,26 @@ import Foundation
 import Parse
 import RealmSwift
 
-class User: Model {
+public class User: Model {
    
-    dynamic var username: String? = ""
+    public dynamic var username: String? = ""
     
-    dynamic var password: String? = ""
+    public dynamic var password: String? = ""
     
-    dynamic var email: String? = ""
+    public dynamic var email: String? = ""
     
-    dynamic var maxDailyCalorieCount: Int = 2000
+    public dynamic var maxDailyCalorieCount: Int = 2000
     
-    dynamic var calories = List<Calorie>()
+    public dynamic var calories = List<Calorie>()
     
-    dynamic var createdAt: NSDate = NSDate()
+    public dynamic var createdAt: NSDate = NSDate()
     
-    dynamic var updatedAt: NSDate = NSDate()
+    public dynamic var updatedAt: NSDate = NSDate()
     
     
     // MARK: - Model
     
-    override class func modelFromRaw(raw: [String: AnyObject]) -> Model {
+    public override class func modelFromRaw(raw: [String: AnyObject]) -> Model {
         
         let model = User()
         
@@ -55,7 +55,7 @@ class User: Model {
     }
     
     
-    override func toDictionary() -> [String: AnyObject] {
+    public override func toDictionary() -> [String: AnyObject] {
         
         var raw: [String: AnyObject] = [:]
         
@@ -73,7 +73,7 @@ class User: Model {
     }
     
     
-    override class func tableName() -> String {
+    public override class func tableName() -> String {
         return "_User"
     }
     
@@ -83,7 +83,7 @@ class User: Model {
     
     :returns: returns the current user or nil when no user is logged in
     */
-    class func currentUser() -> User? {
+    public class func currentUser() -> User? {
         
         if let currentUserId = NSUserDefaults.standardUserDefaults().stringForKey("currentUserId") {
             
@@ -111,7 +111,7 @@ class User: Model {
     :param: password   password of the user to log in
     :param: completion completion handler
     */
-    class func login(username: String, password: String, completion: (user: User?, error: NSError?) -> Void) {
+    public class func login(username: String, password: String, completion: (user: User?, error: NSError?) -> Void) {
         
         PFUser.logInWithUsernameInBackground(
             username,
@@ -151,7 +151,7 @@ class User: Model {
     :param: user       the user model to register
     :param: completion a completion handler with the registered user or error
     */
-    class func signUp(user: User, completion: (User?, NSError?) -> Void) {
+    public class func signUp(user: User, completion: (User?, NSError?) -> Void) {
         
         let rawUser = Adapter<User>.buildRaw(user.toDictionary()) as! PFUser
         rawUser.password = user.password
@@ -190,7 +190,7 @@ class User: Model {
     /**
     Logs out the current User
     */
-    class func logOutCurrentUser() {
+    public class func logOutCurrentUser() {
         
         if let currentUserId = NSUserDefaults.standardUserDefaults().stringForKey("currentUserId") {
             
@@ -208,4 +208,158 @@ class User: Model {
         PFUser.logOut()
     }
     
+    
+    // MARK: - Calories
+    
+    public func todaysEntries() -> [Calorie] {
+        
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let components = calendar?.components(
+            NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond,
+            fromDate: NSDate())
+        
+        // today at 10AM
+        components?.hour = 0
+        components?.minute = 0
+        components?.second = 0
+        
+        let todayStart = calendar?.dateByAddingComponents(
+            components!,
+            toDate: NSDate(),
+            options: NSCalendarOptions.allZeros)
+        
+        
+        components?.hour = 23
+        components?.minute = 59
+        components?.second = 59
+        
+        let todayEnd = calendar?.dateByAddingComponents(
+            components!,
+            toDate: NSDate(),
+            options: NSCalendarOptions.allZeros)
+        
+        
+        return self.caloriesInRange(
+            (todayStart!, todayEnd!),
+            timeRange: (0, 0, 23, 59))
+    }
+    
+    
+    public func caloriesInRange(dateRange: (from: NSDate, to: NSDate), timeRange: (fromHour: Int, fromMinute: Int, toHour: Int, toMinute: Int)) -> [Calorie] {
+        
+        // current calendar
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        
+        // build from date
+        let fromComponents = calendar?.components(
+            NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond,
+            fromDate: dateRange.from)
+        
+        fromComponents?.hour = timeRange.fromHour
+        fromComponents?.minute = timeRange.fromMinute
+        fromComponents?.second = 0
+        
+        let from = calendar?.dateByAddingComponents(
+            fromComponents!,
+            toDate: dateRange.from,
+            options: NSCalendarOptions.allZeros)
+        
+        // build to date
+        let toComponents = calendar?.components(
+            NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond,
+            fromDate: dateRange.to)
+        
+        toComponents?.hour = timeRange.toHour
+        toComponents?.minute = timeRange.toMinute
+        toComponents?.second = 0
+        
+        let to = calendar?.dateByAddingComponents(
+            toComponents!,
+            toDate: dateRange.to,
+            options: NSCalendarOptions.allZeros)
+        
+        // get all entries in date range
+        let calories = self.calories.filter("eatenOn >= %@ AND eatenOn <= %@",
+            from!,
+            to!)
+        .sorted("eatenOn", ascending: true)
+        
+        // calculates number of minutes in each time interval
+        let fromMinutesSinceDate = (timeRange.fromHour * 60) + timeRange.fromMinute
+        let toMinutesSinceDate = (timeRange.toHour * 60) + timeRange.toMinute
+        
+        // where to store results
+        var finalResult: [Calorie] = []
+        
+        for calorie in calories {
+            
+            // calculates number of minutes in the eaten date
+            let dateEatenComponents = calendar?.components(
+                NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute,
+                fromDate: calorie.eatenOn)
+            
+            let hour = dateEatenComponents?.hour
+            let minute = dateEatenComponents?.minute
+            
+            // is eaten date in time interval?
+            if let hour = hour, minute = minute {
+                
+                let minutesSinceEatenDate = (hour * 60) + minute
+                
+                if minutesSinceEatenDate >= fromMinutesSinceDate &&
+                    minutesSinceEatenDate <= toMinutesSinceDate {
+                        
+                        finalResult.append(calorie)
+                }
+            }
+            
+        }
+        
+        return finalResult
+    }
+    
+    
+    /**
+    Gets all the calories entries from the server and updates the local records
+    
+    :param: completion completion handler
+    */
+    public func getRemoteCalories(completion: ([Calorie], NSError?) -> Void) {
+        
+        let me: AnyObject = Adapter<User>.buildRaw(self.objectId)
+        
+        Adapter<Calorie>.find(
+            ["where":
+                ["owner": ["=": me]],
+                "populate": ["owner"]],
+            completion: { (calories: [Calorie], error: NSError?) -> Void in
+                
+                
+                if calories.count > 0 && error == nil {
+                    
+                    let realm = Realm()
+                    
+                    realm.write({ [unowned self] () -> Void in
+                        
+                        for newCalorie in calories {
+                            
+                            realm.add(newCalorie, update: true)
+                            
+                            let oldCalorie = self.calories.filter("objectId = %@", newCalorie.objectId)
+                            
+                            if oldCalorie.count == 0 {
+                                
+                                self.calories.append(newCalorie)
+                            }
+                        }
+                    })
+                    
+                    completion(calories, nil)
+                }
+                else {
+                    
+                    completion([], error)
+                }
+        })
+    }
 }

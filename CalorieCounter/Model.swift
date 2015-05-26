@@ -10,21 +10,21 @@ import Foundation
 
 import RealmSwift
 
-class Model: Object {
+public class Model: Object {
    
-    dynamic var objectId: String = ""
+    public dynamic var objectId: String = ""
     
     
     // MARK: - Realm
     
-    override static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "objectId"
     }
     
     
     // MARK: - Model
     
-    class func modelFromRaw(raw: [String: AnyObject]) -> Model {
+    public class func modelFromRaw(raw: [String: AnyObject]) -> Model {
         
         let model = Model()
         
@@ -34,7 +34,7 @@ class Model: Object {
     }
     
     
-    func toDictionary() -> [String: AnyObject] {
+    public func toDictionary() -> [String: AnyObject] {
         
         var raw: [String: AnyObject] = [:]
         
@@ -44,17 +44,17 @@ class Model: Object {
     }
     
     
-    class func tableName() -> String {
+    public class func tableName() -> String {
         return ""
     }
     
     
-    class func tableNameForAssociation(association: String) -> String {
+    public class func tableNameForAssociation(association: String) -> String {
         return ""
     }
     
     
-    func save<T:Model>(type: T.Type, completion: (T?, NSError?) -> Void) {
+    public func save<T:Model>(type: T.Type, completion: (T?, NSError?) -> Void) {
         
         Adapter<T>.save(self, completion: { (savedModel: T?, error: NSError?) -> Void in
             
@@ -71,7 +71,7 @@ class Model: Object {
     }
     
     
-    func delete<T:Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
+    public func delete<T:Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
         
         Adapter<T>.delete(self, completion: { (succeeded: Bool, error: NSError?) -> Void in
             
