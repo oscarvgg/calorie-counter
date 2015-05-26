@@ -51,6 +51,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             mainViewController?.localUser = currentUser
             
+            currentUser.getRemoteCalories({ (calories: [Calorie], error: NSError?) -> Void in
+                
+                
+            })
         }
         else {
             

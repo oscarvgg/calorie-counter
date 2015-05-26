@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		553C34681B14205100420DF7 /* UserModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553C34671B14205100420DF7 /* UserModelTests.swift */; };
+		553C346B1B14391300420DF7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553C346A1B14391300420DF7 /* Constants.swift */; };
 		55A3B2EA1B0F8CB000B79671 /* NewEntryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A3B2E91B0F8CB000B79671 /* NewEntryTableViewController.swift */; };
 		55BFEF051B0AE62100EA6A0F /* LogInTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BFEF041B0AE62100EA6A0F /* LogInTableViewController.swift */; };
 		55BFEF071B0AEA7100EA6A0F /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BFEF061B0AEA7100EA6A0F /* SignUpTableViewController.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		553C34671B14205100420DF7 /* UserModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModelTests.swift; sourceTree = "<group>"; };
+		553C346A1B14391300420DF7 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		55A3B2E91B0F8CB000B79671 /* NewEntryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEntryTableViewController.swift; sourceTree = "<group>"; };
 		55BFEF041B0AE62100EA6A0F /* LogInTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInTableViewController.swift; sourceTree = "<group>"; };
 		55BFEF061B0AEA7100EA6A0F /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				55A3B2E91B0F8CB000B79671 /* NewEntryTableViewController.swift */,
 				81BA814E1A49DA1800E65899 /* Main.storyboard */,
 				55F7DF5C1B0904B1003CE14E /* Styler.swift */,
+				553C346A1B14391300420DF7 /* Constants.swift */,
 				55F7DF5E1B090985003CE14E /* Data Access */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81481A49DA1800E65899 /* Supporting Files */,
@@ -364,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55F7DF5D1B0904B1003CE14E /* Styler.swift in Sources */,
+				553C346B1B14391300420DF7 /* Constants.swift in Sources */,
 				55A3B2EA1B0F8CB000B79671 /* NewEntryTableViewController.swift in Sources */,
 				55BFEF051B0AE62100EA6A0F /* LogInTableViewController.swift in Sources */,
 				55F7DF791B0985CC003CE14E /* Adapter.swift in Sources */,

@@ -7,20 +7,41 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainTableViewController: UITableViewController {
     
     
-    var localUser: User?
+    var localUser: User!
+    
+    var entries: [Calorie] = []
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: Selector("updateEntries:"),
+            name: Constants.Notifications.Storage.entriesUpdated,
+            object: nil)
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if self.localUser == nil {
+            
+            self.localUser = User.currentUser()
+        }
+        
+        entries = self.localUser.todaysEntries()
+        
+//        self.calories.extend(self.localUser?.calories.filter("eatenOn"))
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        self.updateEntries(nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,61 +52,26 @@ class MainTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+        
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        
+        return entries.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("entryCell", forIndexPath: indexPath) as! UITableViewCell
 
-        // Configure the cell...
+        cell.textLabel?.text = self.entries[indexPath.row].text
+        cell.detailTextLabel?.text = String(self.entries[indexPath.row].value)
 
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
@@ -96,5 +82,14 @@ class MainTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    
+    // MARK: actions
+    
+    func updateEntries(notification: NSNotification?) {
+        
+        self.entries = self.localUser.todaysEntries()
+        
+        self.tableView.reloadData()
+    }
 }
