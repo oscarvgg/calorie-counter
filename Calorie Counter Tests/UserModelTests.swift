@@ -181,7 +181,7 @@ class UserModelTests: XCTestCase {
             (from: from!, to: to!),
             timeRange: (fromHour: 11, fromMinute: 35, toHour: 18, toMinute: 30))
         
-        XCTAssertEqual(todaysEntries.count, 2, "number of entries for today do not match")
+        XCTAssertEqual(todaysEntries.count, 2, "number of entries for range do not match")
     }
     
 

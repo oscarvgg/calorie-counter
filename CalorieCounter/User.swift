@@ -251,31 +251,19 @@ public class User: Model {
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
         
         // build from date
-        let fromComponents = calendar?.components(
-            NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond,
-            fromDate: dateRange.from)
-        
-        fromComponents?.hour = timeRange.fromHour
-        fromComponents?.minute = timeRange.fromMinute
-        fromComponents?.second = 0
-        
-        let from = calendar?.dateByAddingComponents(
-            fromComponents!,
-            toDate: dateRange.from,
+        let from = calendar?.dateBySettingHour(
+            timeRange.fromHour,
+            minute: timeRange.fromMinute,
+            second: 0,
+            ofDate: dateRange.from,
             options: NSCalendarOptions.allZeros)
         
         // build to date
-        let toComponents = calendar?.components(
-            NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond,
-            fromDate: dateRange.to)
-        
-        toComponents?.hour = timeRange.toHour
-        toComponents?.minute = timeRange.toMinute
-        toComponents?.second = 0
-        
-        let to = calendar?.dateByAddingComponents(
-            toComponents!,
-            toDate: dateRange.to,
+        let to = calendar?.dateBySettingHour(
+            timeRange.toHour,
+            minute: timeRange.toMinute,
+            second: 0,
+            ofDate: dateRange.to,
             options: NSCalendarOptions.allZeros)
         
         // get all entries in date range
@@ -284,33 +272,32 @@ public class User: Model {
             to!)
         .sorted("eatenOn", ascending: true)
         
-        // calculates number of minutes in each time interval
-        let fromMinutesSinceDate = (timeRange.fromHour * 60) + timeRange.fromMinute
-        let toMinutesSinceDate = (timeRange.toHour * 60) + timeRange.toMinute
-        
         // where to store results
         var finalResult: [Calorie] = []
         
         for calorie in calories {
             
-            // calculates number of minutes in the eaten date
-            let dateEatenComponents = calendar?.components(
-                NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute,
-                fromDate: calorie.eatenOn)
+            let timeFrom = calendar?.dateBySettingHour(
+                timeRange.fromHour,
+                minute: timeRange.fromMinute,
+                second: 0,
+                ofDate: calorie.eatenOn,
+                options: NSCalendarOptions.allZeros)
             
-            let hour = dateEatenComponents?.hour
-            let minute = dateEatenComponents?.minute
+            let timeTo = calendar?.dateBySettingHour(
+                timeRange.toHour,
+                minute: timeRange.toMinute,
+                second: 0,
+                ofDate: calorie.eatenOn,
+                options: NSCalendarOptions.allZeros)
+            
+            let fromComparison = calorie.eatenOn.compare(timeFrom!)
+            let toComparison = calorie.eatenOn.compare(timeTo!)
             
             // is eaten date in time interval?
-            if let hour = hour, minute = minute {
+            if (fromComparison == NSComparisonResult.OrderedDescending ||  fromComparison == NSComparisonResult.OrderedSame) && (toComparison == NSComparisonResult.OrderedAscending ||  toComparison == NSComparisonResult.OrderedSame) {
                 
-                let minutesSinceEatenDate = (hour * 60) + minute
-                
-                if minutesSinceEatenDate >= fromMinutesSinceDate &&
-                    minutesSinceEatenDate <= toMinutesSinceDate {
-                        
-                        finalResult.append(calorie)
-                }
+                finalResult.append(calorie)
             }
             
         }
@@ -352,6 +339,14 @@ public class User: Model {
                                 self.calories.append(newCalorie)
                             }
                         }
+                    })
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
+                        NSNotificationCenter
+                            .defaultCenter()
+                            .postNotificationName(Constants.Notifications.Storage.entriesUpdated,
+                                object: nil)
                     })
                     
                     completion(calories, nil)
