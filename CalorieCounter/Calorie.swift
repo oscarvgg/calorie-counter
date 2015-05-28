@@ -81,29 +81,81 @@ public class Calorie: Model {
         return "_User"
     }
 
+//    public override func save<T : Model>(type: T.Type, completion: (T?, NSError?) -> Void) {
+//        
+//        Adapter<T>.save(self as! T, completion: { (savedModel: T?, error: NSError?) -> Void in
+//            
+//            if let savedModel = savedModel as? Calorie {
+//                
+//                let realm = Realm()
+//                
+//                realm.write({ () -> Void in
+//                    
+//                    realm.add(savedModel, update: true)
+//                    
+//                    if let owner = self.remoteOwner {
+//                        
+//                        let user = realm.objectForPrimaryKey(User.self, key: owner.objectId)
+//                        
+//                        let oldCalories = user?.calories.filter("objectId = %@", savedModel.objectId)
+//                        
+//                        if oldCalories!.count == 0 {
+//                            
+//                            user?.calories.append(savedModel)
+//                        }
+//                    }
+//                })
+//            }
+//            
+//            completion(savedModel, error)
+//        })
+//    }
+    
+    
     public override func save<T : Model>(type: T.Type, completion: (T?, NSError?) -> Void) {
+        
+        if self.remoteOwner == nil {
+            
+            if let id = self.owner.first?.objectId {
+                
+                let owner = Realm().objects(User.self).filter("objectId = %@", id)
+                
+                self.remoteOwner = owner.first
+            }
+        }
         
         Adapter<T>.save(self as! T, completion: { (savedModel: T?, error: NSError?) -> Void in
             
-            if let savedModel = savedModel as? Calorie {
+            if savedModel != nil {
                 
                 let realm = Realm()
                 
                 realm.write({ () -> Void in
                     
-                    realm.add(savedModel, update: true)
+                    realm.add(self, update: true)
                     
-                    if let owner = self.remoteOwner {
+                    // save the remote owner locally
+                    if let remoteOwner = self.remoteOwner {
                         
-                        let user = realm.objectForPrimaryKey(User.self, key: owner.objectId)
+                        let localOwner = realm.objects(User).filter("objectId = %@", remoteOwner.objectId)
                         
-                        let oldCalories = user?.calories.filter("objectId = %@", savedModel.objectId)
-                        
-                        if oldCalories!.count == 0 {
+                        if localOwner.count > 0 {
                             
-                            user?.calories.append(savedModel)
+                            let oldCalorie = localOwner.first?.calories.filter("objectId = %@", self.objectId)
+                            
+                            if oldCalorie?.count <= 0 {
+                                
+                                localOwner.first?.calories.append(self)
+                            }
+                        }
+                        else {
+                            
+                            realm.add(remoteOwner, update: true)
+                            
+                            remoteOwner.calories.append(self)
                         }
                     }
+                    
                 })
             }
             

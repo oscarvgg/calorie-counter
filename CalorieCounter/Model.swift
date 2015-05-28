@@ -73,15 +73,24 @@ public class Model: Object {
     
     public func delete<T:Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
         
+        let me = Realm().objects(T).filter("objectId == %@", self.objectId)
+        
         Adapter<T>.delete(self, completion: { (succeeded: Bool, error: NSError?) -> Void in
             
-            if succeeded {
+            if !succeeded {
                 
-                Realm().write({ () -> Void in
-                    
-                    Realm().delete(self)
-                })
+                return completion(succeeded, error)
             }
+            
+            let realm = Realm()
+            
+            // remove me from local database
+            realm.write({ () -> Void in
+                
+                let me = Realm().objects(T).filter("objectId == %@", self.objectId)
+                
+                realm.delete(me)
+            })
             
             completion(succeeded, error)
         })

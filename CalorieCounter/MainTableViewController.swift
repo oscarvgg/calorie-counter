@@ -77,17 +77,35 @@ class MainTableViewController: UITableViewController {
 
         return cell
     }
+    
+    
+    // MARK: - Table view delegate
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let entry = self.entries[indexPath.row]
+        
+        self.performSegueWithIdentifier("newEntrySegue", sender: entry)
+    }
 
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        
+        
+        if segue.identifier == "newEntrySegue" {
+            
+            if let entry = sender as? Calorie {
+                
+                let navigation = segue.destinationViewController as! UINavigationController
+                let newEntryViewController = navigation.viewControllers.first as! NewEntryTableViewController
+                
+                newEntryViewController.newEntry = entry
+            }
+        }
     }
-    */
     
     
     // MARK: actions

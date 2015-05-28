@@ -23,13 +23,61 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        
+        if self.newEntry.objectId != "" {
+            
+            let auxiliarEntry = Calorie()
+            auxiliarEntry.objectId = self.newEntry.objectId
+            auxiliarEntry.text = self.newEntry.text
+            auxiliarEntry.remoteOwner = self.newEntry.remoteOwner
+            auxiliarEntry.value = self.newEntry.value
+            auxiliarEntry.eatenOn = self.newEntry.eatenOn
+            
+            self.newEntry = auxiliarEntry
+            
+            self.title = "Update Entry"
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    // MARK: - Table view delegate
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if self.newEntry.objectId == "" {
+            
+            return
+        }
+        
+        if let textField = cell.viewWithTag(1) as? UITextField {
+        
+            switch (indexPath.row) {
+                
+            case 0:
+                textField.text = self.newEntry.text
+                
+            case 1:
+                textField.text = String(self.newEntry.value)
+                
+            case 2:
+                
+                let formatedDate = NSDateFormatter.localizedStringFromDate(
+                    self.newEntry.eatenOn,
+                    dateStyle: NSDateFormatterStyle.MediumStyle,
+                    timeStyle: NSDateFormatterStyle.ShortStyle)
+                
+                textField.text = formatedDate
+                
+            default:
+                break
+            }
+        }
+    }
+    
 
     // MARK: - Text field delegate
     
@@ -143,6 +191,10 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
             self.newEntry.remoteOwner = user
         
             self.newEntry.save(Calorie.self, completion: { (savedEntry: Calorie?, error: NSError?) -> Void in
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(
+                    Constants.Notifications.Storage.entriesUpdated,
+                    object: self.newEntry)
                 
                 self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
                     
