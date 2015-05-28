@@ -87,6 +87,33 @@ class MainTableViewController: UITableViewController {
         
         self.performSegueWithIdentifier("newEntrySegue", sender: entry)
     }
+    
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+        
+        var deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action: UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            
+            self.tableView(self.tableView!, commitEditingStyle: UITableViewCellEditingStyle.Delete, forRowAtIndexPath: indexPath)
+        }
+        
+        return [deleteAction]
+    }
+    
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if (editingStyle == .Delete)
+        {
+            self.entries[indexPath.row].delete(Calorie.self, completion: { (succeeded: Bool, error: NSError?) -> Void in
+                
+                if !succeeded {
+                    return
+                }
+                
+                self.updateEntries(nil)
+            })
+        }
+    }
 
     
     // MARK: - Navigation
