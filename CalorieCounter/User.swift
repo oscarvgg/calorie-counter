@@ -211,6 +211,18 @@ public class User: Model {
     
     // MARK: - Calories
     
+    public func todayValue() -> Int {
+        
+        var total = 0
+        
+        for entry in self.todaysEntries() {
+            
+            total += entry.value
+        }
+        
+        return total
+    }
+    
     public func todaysEntries() -> [Calorie] {
         
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)

@@ -16,6 +16,7 @@ struct Constants {
             
             static let entriesUpdated = "com.oscarvgg.Calorie-Counter.entriesUpdated"
             
+            static let newEntryAdded = "com.oscarvgg.Calorie-Counter.newEntryAdded"
         }
         
     }

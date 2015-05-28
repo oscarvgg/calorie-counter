@@ -16,6 +16,10 @@ class MainTableViewController: UITableViewController {
     
     var entries: [Calorie] = []
 
+    @IBOutlet weak var progressView: CircularProgressView!
+    @IBOutlet weak var caloryCountLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -25,15 +29,17 @@ class MainTableViewController: UITableViewController {
             selector: Selector("updateEntries:"),
             name: Constants.Notifications.Storage.entriesUpdated,
             object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: Selector("updateEntries:"),
+            name: Constants.Notifications.Storage.newEntryAdded,
+            object: nil)
 
         if self.localUser == nil {
             
             self.localUser = User.currentUser()
         }
-        
-        entries = self.localUser.todaysEntries()
-        
-//        self.calories.extend(self.localUser?.calories.filter("eatenOn"))
     }
     
     
@@ -89,6 +95,14 @@ class MainTableViewController: UITableViewController {
     func updateEntries(notification: NSNotification?) {
         
         self.entries = self.localUser.todaysEntries()
+        
+        let todayValue = self.localUser.todayValue()
+        let maxCount = self.localUser.maxDailyCalorieCount
+        
+        self.progressView.progress = todayValue
+        self.progressView.totalValue = maxCount
+        
+        self.caloryCountLabel.text = "\(todayValue) \n / \(maxCount)"
         
         self.tableView.reloadData()
     }
