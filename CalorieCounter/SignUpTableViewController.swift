@@ -42,6 +42,123 @@ class SignUpTableViewController: UITableViewController {
             mainViewController.localUser = self.loggedUser
         }
     }
+    
+    
+    // MARK: - Validation
+    
+    func isEmailValid() -> Bool {
+        
+        let textField = self.tableView.cellForRowAtIndexPath(
+            NSIndexPath(forRow: 1, inSection: 0))?
+            .viewWithTag(1) as! UITextField
+        
+        let candidate = textField.text
+        
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
+    }
+    
+    
+    func isFieldEmpty(candidate: String) -> Bool {
+        
+        if candidate.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) <= 0 {
+            return false
+        }
+        
+        return true
+    }
+    
+    
+    func isUsernameValid() -> Bool {
+        
+        let textField = self.tableView.cellForRowAtIndexPath(
+            NSIndexPath(forRow: 0, inSection: 0))?
+            .viewWithTag(1) as! UITextField
+        
+        return self.isFieldEmpty(textField.text)
+    }
+    
+    
+    func isPasswordValid() -> Bool {
+        
+        let textField = self.tableView.cellForRowAtIndexPath(
+            NSIndexPath(forRow: 2, inSection: 0))?
+            .viewWithTag(1) as! UITextField
+        
+        return self.isFieldEmpty(textField.text)
+    }
+    
+    
+    func validateFields() -> Bool {
+        
+        let alert: UIAlertController!
+        
+        let action = UIAlertAction(
+            title: "Ok",
+            style: UIAlertActionStyle.Default) { (action: UIAlertAction!) -> Void in
+                
+        }
+        
+        
+        if !self.isUsernameValid() {
+            
+            alert = UIAlertController(
+                title: "Invalid field",
+                message: "Username can't be empty",
+                preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(action)
+            
+            self.presentViewController(
+                alert,
+                animated: true,
+                completion: { () -> Void in
+            })
+            
+            return false
+        }
+        
+        
+        if !self.isEmailValid() {
+            
+            alert = UIAlertController(
+                title: "Invalid field",
+                message: "Email field is not valid",
+                preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(action)
+            
+            self.presentViewController(
+                alert,
+                animated: true,
+                completion: { () -> Void in
+            })
+            
+            return false
+        }
+        
+        
+        if !self.isPasswordValid() {
+            
+            alert = UIAlertController(
+                title: "Invalid field",
+                message: "Password can't be empty",
+                preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(action)
+            
+            self.presentViewController(
+                alert,
+                animated: true,
+                completion: { () -> Void in
+            })
+            
+            return false
+        }
+        
+        return true
+    }
 
     
     // MARK: - Actions
@@ -57,6 +174,11 @@ class SignUpTableViewController: UITableViewController {
             let textField = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0))?.viewWithTag(1) as? UITextField
             
             textField?.resignFirstResponder()
+        }
+        
+        if !self.validateFields() {
+            
+            return
         }
         
         
