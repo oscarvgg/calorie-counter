@@ -844,6 +844,7 @@
                             <outlet property="delegate" destination="sJQ-bY-IRA" id="yuK-Gp-IGF"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Results" id="LVY-eh-8KG"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GvJ-81-9JT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

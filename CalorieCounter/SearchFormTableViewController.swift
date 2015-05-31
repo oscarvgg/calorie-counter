@@ -176,6 +176,47 @@ class SearchFormTableViewController: UITableViewController, UIPickerViewDelegate
             return false
         }
         
+        
+        if (self.configuration["fromTime"] != nil && self.configuration["toTime"] == nil) ||
+            (self.configuration["fromTime"] == nil && self.configuration["toTime"] != nil) {
+                
+                alert = UIAlertController(
+                    title: "Invalid field",
+                    message: "\"From\" time and \"To\" time must be both set or both empty",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(action)
+                
+                self.presentViewController(
+                    alert,
+                    animated: true,
+                    completion: { () -> Void in
+                })
+                
+                return false
+        }
+        
+        if let fromTime = self.configuration["fromTime"], toTime = self.configuration["toTime"] {
+        
+            if fromTime.compare(toTime) == NSComparisonResult.OrderedDescending {
+                
+                alert = UIAlertController(
+                    title: "Invalid field",
+                    message: "\"To\" time must be gratter than \"From\" time",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(action)
+                
+                self.presentViewController(
+                    alert,
+                    animated: true,
+                    completion: { () -> Void in
+                })
+                
+                return false
+            }
+        }
+        
         return true
     }
     
