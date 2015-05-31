@@ -23,11 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Parse configuration
         Parse.setApplicationId("KZGf53jXvy5VWbqrOsOQSca41W3830eGwib0gYeV", clientKey: "jJdVpFmkqAu7ufMYbTTURU8r8t2mhPiTi6vG4JNl")
         
-        PFUser.enableAutomaticUser()
+//        PFUser.enableAutomaticUser()
 
-        let defaultACL = PFACL()
-        defaultACL.setPublicReadAccess(true)
-        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
+//        let defaultACL = PFACL()
+//        defaultACL.setPublicReadAccess(true)
+//        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
         
         // apply styles
         Styler.applyStyle()

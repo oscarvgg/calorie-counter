@@ -75,6 +75,11 @@ class LogInTableViewController: UITableViewController {
                 self.loggedUser = user
                 
                 self.performSegueWithIdentifier("mainViewSegue", sender: self)
+                
+                user.getRemoteCalories({ (entries: [Calorie], error: NSError?) -> Void in
+                    
+                    
+                })
             }
             else if error != nil {
                 

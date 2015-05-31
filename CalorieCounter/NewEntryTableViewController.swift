@@ -159,6 +159,9 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
         
         dateTextField.text = formatedDate
     }
+    
+    
+    // MARK: - Actions
 
     @IBAction func didTapCancel(sender: UIButton) {
         
@@ -190,7 +193,7 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
             
             self.newEntry.remoteOwner = user
         
-            self.newEntry.save(Calorie.self, completion: { (savedEntry: Calorie?, error: NSError?) -> Void in
+            self.newEntry.save(Calorie.self, completion: { (succeeded: Bool, error: NSError?) -> Void in
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(
                     Constants.Notifications.Storage.entriesUpdated,

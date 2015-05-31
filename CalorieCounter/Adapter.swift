@@ -45,16 +45,21 @@ public class Adapter<T: Model>: NSObject {
     }
     
     
-    public static func save(model: Model, completion: (T?, NSError?) -> Void) {
+    public static func save(model: Model, completion: (Bool, NSError?) -> Void) {
         
         var rawModel = PFObject(
             withoutDataWithClassName: T.tableName(),
             objectId: model.objectId != "" ? model.objectId : nil)
         
+        if rawModel.objectId == PFUser.currentUser()?.objectId {
+            
+            rawModel = PFUser.currentUser()!
+        }
+        
         // Build PFObject from model
         for (key, value) in model.toDictionary() {
             
-            if key != "objectId" {
+            if key != "objectId" && key != "password" && key != "createdAt" && key != "updatedAt" {
                 
                 // if value is an object
                 if let idValue = value["objectId"] as? String {
@@ -79,7 +84,7 @@ public class Adapter<T: Model>: NSObject {
                 model.objectId = rawModel.objectId!
             }
             
-            completion(T.modelFromRaw(self.rawToDictionary(rawModel)) as? T, error);
+            completion(true, error);
         }
     }
     

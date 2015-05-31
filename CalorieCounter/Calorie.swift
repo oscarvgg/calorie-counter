@@ -112,7 +112,7 @@ public class Calorie: Model {
 //    }
     
     
-    public override func save<T : Model>(type: T.Type, completion: (T?, NSError?) -> Void) {
+    public override func save<T : Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
         
         if self.remoteOwner == nil {
             
@@ -124,9 +124,9 @@ public class Calorie: Model {
             }
         }
         
-        Adapter<T>.save(self as! T, completion: { (savedModel: T?, error: NSError?) -> Void in
+        Adapter<T>.save(self as! T, completion: { (succeeded: Bool, error: NSError?) -> Void in
             
-            if savedModel != nil {
+            if succeeded {
                 
                 let realm = Realm()
                 
@@ -159,7 +159,7 @@ public class Calorie: Model {
                 })
             }
             
-            completion(savedModel, error)
+            completion(succeeded, error)
         })
     }
 }

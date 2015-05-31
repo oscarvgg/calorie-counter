@@ -54,11 +54,11 @@ public class Model: Object {
     }
     
     
-    public func save<T:Model>(type: T.Type, completion: (T?, NSError?) -> Void) {
+    public func save<T:Model>(type: T.Type, completion: (Bool, NSError?) -> Void) {
         
-        Adapter<T>.save(self, completion: { (savedModel: T?, error: NSError?) -> Void in
+        Adapter<T>.save(self, completion: { (succeeded : Bool, error: NSError?) -> Void in
             
-            if let savedModel  = savedModel {
+            if succeeded {
                 
                 Realm().write({ () -> Void in
                     
@@ -66,7 +66,7 @@ public class Model: Object {
                 })
             }
             
-            completion(savedModel, error)
+            completion(succeeded, error)
         })
     }
     
