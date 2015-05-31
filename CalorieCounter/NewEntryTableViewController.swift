@@ -97,7 +97,22 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
                 action: Selector("datePickerViewChanged:"),
                 forControlEvents: UIControlEvents.ValueChanged)
             
-            self.datePickerViewChanged(datePickerView)
+            if let dateString = textField.text where dateString != "" {
+                
+                let formatter = NSDateFormatter()
+                
+                formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+                
+                if let date = formatter.dateFromString(textField.text) {
+                    
+                    datePickerView.setDate(date, animated: false)
+                }
+            }
+            else {
+                
+                self.datePickerViewChanged(datePickerView)
+            }
             
             textField.inputView = datePickerView
         }

@@ -52,7 +52,35 @@ class SearchFormTableViewController: UITableViewController, UIPickerViewDelegate
             action: Selector("datePickerViewChanged:"),
             forControlEvents: UIControlEvents.ValueChanged)
         
-        self.datePickerViewChanged(datePickerView)
+        if let dateString = self.textFieldBeingEdited?.text where dateString != "" {
+            
+            let formatter = NSDateFormatter()
+            
+            if textField.tag >= 1 && textField.tag <= 2 {
+                
+                formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                formatter.timeStyle = NSDateFormatterStyle.NoStyle
+                
+                if let date = formatter.dateFromString(textField.text) {
+                    
+                    datePickerView.setDate(date, animated: false)
+                }
+            }
+            else if textField.tag >= 3 && textField.tag <= 4 {
+                
+                formatter.dateStyle = NSDateFormatterStyle.NoStyle
+                formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+                
+                if let date = formatter.dateFromString(textField.text) {
+                    
+                    datePickerView.setDate(date, animated: false)
+                }
+            }
+        }
+        else {
+            
+            self.datePickerViewChanged(datePickerView)
+        }
         
         textField.inputView = datePickerView
         
