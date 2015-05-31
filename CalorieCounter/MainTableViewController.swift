@@ -35,11 +35,20 @@ class MainTableViewController: UITableViewController {
             selector: Selector("updateEntries:"),
             name: Constants.Notifications.Storage.newEntryAdded,
             object: nil)
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: Selector("updateEntries:"),
+            name: Constants.Notifications.Storage.maxDailyCaloriesUpdated,
+            object: nil)
 
         if self.localUser == nil {
             
             self.localUser = User.currentUser()
         }
+        
+        self.navigationController?.viewControllers = [self]
     }
     
     

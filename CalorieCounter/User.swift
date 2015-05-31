@@ -38,6 +38,8 @@ public class User: Model {
         
         model.username = raw["username"] as? String ?? ""
         
+        model.email = raw["email"] as? String ?? ""
+        
         model.maxDailyCalorieCount = raw["maxDailyCalorieCount"] as? Int ?? 2000
         
 //        let calories = Realm().objects(Calorie.self)
@@ -84,6 +86,8 @@ public class User: Model {
     :returns: returns the current user or nil when no user is logged in
     */
     public class func currentUser() -> User? {
+        
+        let currentUser = PFUser.currentUser()
         
         if let currentUserId = NSUserDefaults.standardUserDefaults().stringForKey("currentUserId") {
             
