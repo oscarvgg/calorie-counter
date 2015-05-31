@@ -74,11 +74,29 @@ class SearchResultsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("entryCell", forIndexPath: indexPath) as! UITableViewCell
-
-        cell.textLabel?.text = self.entries[indexPath.row].text
-        cell.detailTextLabel?.text = String(self.entries[indexPath.row].value)
-
+        
+        let foodNameLabel = cell.viewWithTag(1) as! UILabel
+        let caloriesLabel = cell.viewWithTag(2) as! UILabel
+        let dateLabel = cell.viewWithTag(3) as! UILabel
+        
+        let entry: Calorie = self.entries[indexPath.row]
+        
+        foodNameLabel.text = entry.text
+        caloriesLabel.text = String(entry.value)
+        
+        let formatedDate = NSDateFormatter.localizedStringFromDate(
+            entry.eatenOn,
+            dateStyle: NSDateFormatterStyle.MediumStyle,
+            timeStyle: NSDateFormatterStyle.ShortStyle)
+        
+        dateLabel.text = formatedDate
+        
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return 60;
     }
     
 
