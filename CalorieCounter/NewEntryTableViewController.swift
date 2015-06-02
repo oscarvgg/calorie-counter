@@ -121,7 +121,7 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
     }
     
     
-    func textFieldDidEndEditing(editedField: UITextField) {
+    func getValueFromField(editedField: UITextField) {
         
         if let cell = editedField.superview?.superview as? UITableViewCell {
             
@@ -176,6 +176,87 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
     }
     
     
+    // MARK: - Validations
+    
+    func validateFields() -> Bool {
+        
+        let alert: UIAlertController!
+        
+        let action = UIAlertAction(
+            title: "Ok",
+            style: UIAlertActionStyle.Default) { (action: UIAlertAction!) -> Void in
+                
+        }
+        
+        if self.newEntry.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) <= 0 {
+            
+            alert = UIAlertController(
+                title: "Invalid field",
+                message: "Must entrer food name",
+                preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(action)
+            
+            self.presentViewController(
+                alert,
+                animated: true,
+                completion: { () -> Void in
+            })
+            
+            return false
+        }
+        
+        // get the text field for the cell at i
+        let numberField = self.tableView.cellForRowAtIndexPath(
+            NSIndexPath(forRow: 1, inSection: 0))?
+            .viewWithTag(1) as? UITextField
+        
+        if numberField?.text.toInt() == nil {
+                
+                alert = UIAlertController(
+                    title: "Invalid field",
+                    message: "calorie value must be numeric",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(action)
+                
+                self.presentViewController(
+                    alert,
+                    animated: true,
+                    completion: { () -> Void in
+                })
+                
+                return false
+        }
+        
+        
+        // get the text field for the cell at i
+        let dateField = self.tableView.cellForRowAtIndexPath(
+            NSIndexPath(forRow: 2, inSection: 0))?
+            .viewWithTag(1) as? UITextField
+        
+        if dateField?.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) <= 0 {
+            
+            alert = UIAlertController(
+                title: "Invalid field",
+                message: "Must enter a date",
+                preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(action)
+            
+            self.presentViewController(
+                alert,
+                animated: true,
+                completion: { () -> Void in
+            })
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    
     // MARK: - Actions
 
     @IBAction func didTapCancel(sender: UIButton) {
@@ -199,7 +280,14 @@ class NewEntryTableViewController: UITableViewController, UIPickerViewDelegate, 
                 NSIndexPath(forRow: i, inSection: 0))?
                 .viewWithTag(1) as? UITextField
             
+            self.getValueFromField(textField!)
+            
             textField?.resignFirstResponder()
+        }
+        
+        if !self.validateFields() {
+            
+            return
         }
         
         let user = User.currentUser()
